@@ -6,20 +6,20 @@ import NavLinks from "./NavLinks";
 export default function Navbar() {
   // {
   //   name: "Host",
-  //   path: "/host",
+  //   path: "/VanLife/host",
   // },
   const navLinks = [
     {
       name: "Home",
-      path: "/",
+      path: "/VanLife/",
     },
     {
       name: "About",
-      path: "/about",
+      path: "/VanLife/about",
     },
     {
       name: "Vans",
-      path: "/vans",
+      path: "/VanLife/vans",
     },
   ];
 
