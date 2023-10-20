@@ -3,7 +3,6 @@ import VanCard from "../components/VanCard";
 
 export default function Vans() {
   // Fetch Data from API
-
   const [vansData, setVansData] = React.useState([]);
   React.useEffect(() => {
     async function getData() {

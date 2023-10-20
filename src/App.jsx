@@ -17,10 +17,10 @@ export default function App() {
     <BrowserRouter>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/vans" element={<Vans />} />
-        <Route path="/vans/:id" element={<VanDetail />} />
+        <Route path="/VanLife/" element={<Home />} />
+        <Route path="/VanLife/about" element={<About />} />
+        <Route path="/VanLife/vans" element={<Vans />} />
+        <Route path="/VanLife/vans/:id" element={<VanDetail />} />
       </Routes>
       <Footer />
     </BrowserRouter>

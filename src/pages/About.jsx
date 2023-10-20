@@ -27,7 +27,7 @@ export default function About() {
           <h1 className="about--explore-header">
             Your destination is waiting. Your van is ready.
           </h1>
-          <Link to="/vans" className="about--explore-btn">
+          <Link to="/VanLife/vans" className="about--explore-btn">
             Explore our vans
           </Link>
         </div>
