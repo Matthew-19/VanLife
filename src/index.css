@@ -493,11 +493,10 @@ footer {
   column-gap: 33.89px;
   row-gap: 26.91px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
 }
 
 .van--card {
-  height: 310px;
   cursor: pointer;
   overflow: hidden;
   -webkit-tap-highlight-color: transparent;
@@ -505,7 +504,6 @@ footer {
 
 .van--img {
   width: 100%;
-  height: 230px;
   border-radius: 5px;
   transition: transform 0.5s;
 }
@@ -761,6 +759,7 @@ footer {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     justify-items: center;
+    background-color: red;
   }
 
   .host--vans-tile {
