@@ -1,5 +1,5 @@
 import React from "react";
-import VanCard from "../components/VanCard";
+import VanCard from "./VanCard";
 
 export default function Vans() {
   // Fetch Data from API
@@ -37,7 +37,15 @@ export default function Vans() {
           <button className="vans--clearFilters">Clear filters</button>
         </div>
 
-        <div className="vans--cards-container">{vanElements}</div>
+        <div className="vans--cards-container">
+          {vansData.length > 0 ? (
+            vanElements
+          ) : (
+            <div className="preloader">
+              <div></div>
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );

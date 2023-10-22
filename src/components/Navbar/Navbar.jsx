@@ -1,25 +1,25 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import Logo from "../assets/images/logo.png";
+import Logo from "../../assets/images/logo.png";
 import NavLinks from "./NavLinks";
 
 export default function Navbar() {
-  // {
-  //   name: "Host",
-  //   path: "/VanLife/host",
-  // },
   const navLinks = [
     {
       name: "Home",
       path: "/VanLife/",
     },
     {
+      name: "Host",
+      path: "host",
+    },
+    {
       name: "About",
-      path: "/VanLife/about",
+      path: "about",
     },
     {
       name: "Vans",
-      path: "/VanLife/vans",
+      path: "vans",
     },
   ];
 
@@ -28,7 +28,6 @@ export default function Navbar() {
       key={link.path}
       path={link.path}
       name={link.name}
-      isSelected={link.path === window.location.pathname ? true : false}
     />
   ));
 
@@ -82,9 +81,9 @@ export default function Navbar() {
   // Really Need To focus on understanding this part More!!!!!
 
   return (
-    <nav>
+    <nav className="nav">
       <div className="nav--container">
-        <Link to="/">
+        <Link to="/VanLife/">
           <img src={Logo} alt="Van Life Logo" className="nav--logo" />
         </Link>
         {smallWindow && (

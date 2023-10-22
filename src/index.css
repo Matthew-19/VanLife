@@ -1,3 +1,13 @@
+/* =====  ===== */
+/* Variables */
+:root {
+  --simple: #e17654;
+  --luxury: #161616;
+  --rugged: #115e59;
+}
+/* Variables */
+
+/* General */
 * {
   box-sizing: border-box;
 }
@@ -12,6 +22,16 @@ p {
   margin: 0;
 }
 
+section {
+  min-height: calc(100vh - 140px);
+}
+
+section[class^="host"] {
+  padding-left: 25px;
+  padding-right: 25px;
+  min-height: calc(100vh - (140px + 77px));
+}
+
 .overlay {
   background-color: rgb(0, 0, 0, 60%);
   height: 100%;
@@ -20,10 +40,43 @@ p {
   z-index: -1;
 }
 
-section {
-  min-height: calc(100vh - 140px);
+/* General */
+
+/* Components */
+
+/* How to remove the blue highlight of button on mobile? */
+input,
+textarea,
+button,
+select,
+a {
+  -webkit-tap-highlight-color: transparent;
+  text-decoration: none;
 }
 
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+* {
+  scrollbar-color: #5e5e5e #ffffff;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #5e5e5e;
+  border-radius: 10px;
+  border: 3px solid #ffffff;
+}
+/* ===== Scrollbar CSS ===== */
+
+/* ===== Orange Button  ===== */
 .orange-btn {
   font-weight: 700;
   text-align: center;
@@ -42,27 +95,38 @@ section {
 .orange-btn:active {
   box-shadow: inset 5px 5px 10px -3px rgba(0, 0, 0, 0.7);
 }
+/* ===== Orange Button  ===== */
 
-/* How to remove the blue highlight of button on mobile? */
-input,
-textarea,
-button,
-select,
-a {
-  -webkit-tap-highlight-color: transparent;
-  text-decoration: none;
+/* ===== Back arrow ===== */
+.back-arrow {
+  padding: 10px 5px;
+  position: relative;
 }
 
-/* Variables */
-:root {
-  --simple: #e17654;
-  --luxury: #161616;
-  --rugged: #115e59;
+.back-arrow::after {
+  content: "";
+  position: absolute;
+  width: 83%;
+  height: 1px;
+  background-color: #161616;
+  right: 2px;
+  top: 30px;
+  display: none;
 }
-/* Variables */
+
+.back-arrow:hover::after {
+  display: block;
+}
+
+.back-arrow:visited {
+  color: #161616;
+}
+/* ===== Back arrow ===== */
+
+/* Components */
 
 /* NavBar */
-nav {
+.nav {
   background: #fff7ed;
   padding: 20px 10px;
   height: 70px;
@@ -513,14 +577,6 @@ footer {
   align-items: center;
 }
 
-.vanDetail--back-btn {
-  color: #201f1d;
-  font-weight: 500;
-  font-size: 15.9462px;
-  text-decoration-line: underline;
-  position: relative;
-}
-
 .vanDetail--img {
   width: 100%;
   max-width: 497.32px;
@@ -616,3 +672,249 @@ footer {
 /* VanDetail--media */
 
 /* VanDetail */
+
+/* Host */
+.host--page {
+  background-color: #fff7ed;
+}
+
+/* Host */
+
+/* Host-nav */
+.host--nav {
+  display: flex;
+  gap: 10px;
+  width: fit-content;
+  margin: 0 auto;
+  padding-top: 32px;
+  margin-bottom: 45px;
+
+  @media only screen and (min-width: 375px) {
+    margin-left: 26px;
+    gap: 15px;
+  }
+}
+
+.host--nav a {
+  padding: 10px 0;
+  color: #4d4d4d;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.host--nav a:hover,
+.host--nav .active {
+  font-weight: bold;
+  color: black;
+  text-decoration: underline;
+}
+
+/* Host-nav */
+
+/* Host-vans */
+.host--vans-header {
+  margin-bottom: 32px;
+}
+
+.host--vans-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding-bottom: 66px;
+}
+
+.host--vans-tile {
+  display: flex;
+  align-items: center;
+  padding: 18px 24px;
+  gap: 17px;
+  background-color: #ffffff;
+  border-radius: 6px;
+
+  @media only screen and (max-width: 424px) {
+    padding: 9px 12px;
+  }
+}
+
+.host--vans-img {
+  width: 66px;
+  height: 66px;
+  border-radius: 5px;
+}
+
+.host--vans-name {
+  font-weight: 600;
+  font-size: 20px;
+  color: #161616;
+  margin-bottom: 5px;
+}
+
+.host--vans-price {
+  font-weight: 500;
+  color: #4d4d4d;
+}
+
+/* Host-vans Media */
+
+@media only screen and (min-width: 768px) {
+  .host--vans-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    justify-items: center;
+  }
+
+  .host--vans-tile {
+    width: 300px;
+    height: 400px;
+    flex-direction: column;
+    align-items: flex-start;
+    cursor: pointer;
+    overflow: hidden;
+  }
+
+  .host--vans-tile:hover .host--vans-img {
+    transform: scale(0.95);
+  }
+
+  .host--vans-img {
+    width: 252px;
+    height: 298px;
+    transition: transform 0.5s;
+  }
+}
+/* Host-vans Media */
+
+/* Host-vans */
+
+/* Host-vanDetail */
+.host--vanDetail {
+  padding-bottom: 45px;
+}
+
+.host--vanDetail-container {
+  background-color: white;
+  margin-top: 37px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: justify;
+}
+
+.host--vanDetail-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+
+  @media only screen and (min-width: 576px) {
+    flex-direction: row;
+    gap: 25px;
+  }
+}
+
+.host--vanDetail-header-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: inherit;
+
+  @media only screen and (min-width: 576px) {
+    gap: 10px;
+    align-items: flex-start;
+  }
+}
+
+.host--vanDetail-img {
+  width: 160.15px;
+  height: 157.9px;
+  border-radius: 5px;
+}
+
+.host--vanDetail-type {
+  width: 69.8px;
+  height: 27.59px;
+  border-radius: 4.0716px;
+  font-weight: 600;
+  font-size: 13.0291px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffead0;
+  text-transform: capitalize;
+}
+
+.host--vanDetail-type.simple {
+  background-color: var(--simple);
+}
+.host--vanDetail-type.luxury {
+  background-color: var(--luxury);
+}
+.host--vanDetail-type.rugged {
+  background-color: var(--rugged);
+}
+
+.host--vanDetail-name {
+  font-weight: 700;
+  font-size: 26.0583px;
+  color: #161616;
+}
+
+.host--vanDetail-price {
+  font-weight: 700;
+  font-size: 19.5437px;
+  color: #161616;
+}
+.host--vanDetail-price span {
+  font-weight: normal;
+}
+
+.host--vanDetail-nav {
+  display: flex;
+  gap: 35px;
+  margin-top: 26px;
+}
+
+.host--vanDetail-nav a {
+  color: #161616;
+}
+
+.host--vanDetail-nav a:hover,
+.host--vanDetail-nav a.activeStyle {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.host--vanDetail-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 15px;
+}
+
+.host--vanDetail-details > div > span {
+  font-weight: bold;
+}
+
+.host--vanDetail-details .type {
+  text-transform: capitalize;
+}
+
+/* Host-vanDetail Media */
+@media only screen and (min-width: 1024px) {
+  .host--vanDetail-container {
+    font-size: 1.2rem;
+    flex-direction: row;
+    gap: 25px;
+  }
+
+  .host--vanDetail-header-group {
+    border-right: 1px solid black;
+    padding-right: 25px;
+    min-width: max-content;
+  }
+}
+
+/* Host-vanDetail Media */
+
+/* Host-vanDetail */

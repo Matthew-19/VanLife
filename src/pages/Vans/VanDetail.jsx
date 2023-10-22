@@ -12,12 +12,12 @@ export default function VanDetail() {
       setVanData(data.vans);
     }
     getData();
-  }, [params.id]);
+  }, []);
 
   return (
     <section className="vanDetail">
-      <Link to="/VanLife/vans" className="vanDetail--back-btn">
-        Back to all vans
+      <Link to=".." relative="path" className="vanDetail--back-btn back-arrow">
+        &larr; Back to all vans
       </Link>
       {vanData ? (
         <div className="vanDetail--container">
@@ -41,7 +41,9 @@ export default function VanDetail() {
           </div>
         </div>
       ) : (
-        <h2>Loading...</h2>
+        <div className="preloader">
+          <div></div>
+        </div>
       )}
     </section>
   );
