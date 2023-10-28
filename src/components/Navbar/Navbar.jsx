@@ -1,9 +1,16 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Logo from "../../assets/images/logo.png";
+import Avataricon from "../../assets/images/avatar-icon.png";
 import NavLinks from "./NavLinks";
 
 export default function Navbar() {
+  const navigate = useNavigate();
+  function fakeLogout() {
+    localStorage.removeItem("loggedin");
+    navigate(location.pathname)
+  }
+
   const navLinks = [
     {
       name: "Home",
@@ -24,11 +31,7 @@ export default function Navbar() {
   ];
 
   const navLinkElements = navLinks.map((link) => (
-    <NavLinks
-      key={link.path}
-      path={link.path}
-      name={link.name}
-    />
+    <NavLinks key={link.path} path={link.path} name={link.name} />
   ));
 
   // Get Live Window Width
@@ -48,19 +51,19 @@ export default function Navbar() {
 
   // Checking if window width is small or not (Boolean)
 
-  const [smallWindow, setSmallWindow] = React.useState(
+  const [isSmallWindow, setIsSmallWindow] = React.useState(
     windowWidth <= 576 ? true : false
   );
   React.useEffect(() => {
-    setSmallWindow(windowWidth <= 576 ? true : false);
+    setIsSmallWindow(windowWidth <= 576 ? true : false);
   }, [windowWidth]);
 
   // Checking if window is small then hide Links in NavBar
 
-  const [show, setShow] = React.useState(smallWindow ? false : true);
+  const [show, setShow] = React.useState(isSmallWindow ? false : true);
   React.useEffect(() => {
-    setShow(smallWindow ? false : true);
-  }, [smallWindow]);
+    setShow(isSmallWindow ? false : true);
+  }, [isSmallWindow]);
 
   // Toggling Show State with a Button to show/hide Links
 
@@ -69,16 +72,13 @@ export default function Navbar() {
   }
 
   // Location Chamge
-
-  // Really Need To focus on understanding this part More!!!!!
   const location = useLocation();
   React.useEffect(() => {
     // execute on location change
-    if (smallWindow) {
+    if (isSmallWindow) {
       setShow(false);
     }
   }, [location]);
-  // Really Need To focus on understanding this part More!!!!!
 
   return (
     <nav className="nav">
@@ -86,14 +86,29 @@ export default function Navbar() {
         <Link to="/VanLife/">
           <img src={Logo} alt="Van Life Logo" className="nav--logo" />
         </Link>
-        {smallWindow && (
-          <div className="nav--button" onClick={linksToggle}>
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-        )}
-        {show && <div className="nav--links">{navLinkElements}</div>}
+        <div className="nav--rightside">
+          {isSmallWindow && (
+            <div className="nav--button" onClick={linksToggle}>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          )}
+          {show && <div className="nav--links">{navLinkElements}</div>}
+          {localStorage.getItem("loggedin") ? (
+            <button className="nav--logout" onClick={fakeLogout}>
+              Log out
+            </button>
+          ) : (
+            <Link to="login">
+              <img
+                src={Avataricon}
+                alt="avatar-icon"
+                className="nav--avatar-icon"
+              />
+            </Link>
+          )}
+        </div>
       </div>
     </nav>
   );

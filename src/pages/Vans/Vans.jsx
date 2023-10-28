@@ -1,19 +1,24 @@
 import React from "react";
+import { useSearchParams, useLoaderData } from "react-router-dom";
 import VanCard from "./VanCard";
+import { getVans } from "../../services/api";
+
+export function loader() {
+  return getVans();
+}
 
 export default function Vans() {
-  // Fetch Data from API
-  const [vansData, setVansData] = React.useState([]);
-  React.useEffect(() => {
-    async function getData() {
-      const res = await fetch("/api/vans");
-      const data = await res.json();
-      setVansData(data.vans);
-    }
-    getData();
-  }, []);
+  const [searchparams, setSearchParams] = useSearchParams();
+  const typeFilter = searchparams.get("type");
+  const isFiltered = searchparams.toString();
 
-  const vanElements = vansData.map((van) => (
+  const vansData = useLoaderData();
+
+  const displayedVans = typeFilter
+    ? vansData.filter((van) => van.type === typeFilter)
+    : vansData;
+
+  const vanElements = displayedVans.map((van) => (
     <VanCard
       key={van.id}
       id={van.id}
@@ -22,8 +27,20 @@ export default function Vans() {
       img={van.imageUrl}
       price={van.price}
       type={van.type}
+      search={`?${searchparams.toString()}`}
+      typeFilter={typeFilter}
     />
   ));
+
+  function handleFilter(key, value) {
+    const newSearchParams = new URLSearchParams(searchparams);
+    if (value === null) {
+      newSearchParams.delete(key);
+    } else {
+      newSearchParams.set(key, value);
+    }
+    return `?${newSearchParams.toString()}`;
+  }
 
   return (
     <section className="vans">
@@ -31,21 +48,41 @@ export default function Vans() {
         <h1 className="vans--header">Explore our van options</h1>
 
         <div className="vans--filters">
-          <span className="vans--filter simple">Simple</span>
-          <span className="vans--filter luxury">Luxury</span>
-          <span className="vans--filter rugged">Rugged</span>
-          <button className="vans--clearFilters">Clear filters</button>
-        </div>
-
-        <div className="vans--cards-container">
-          {vansData.length > 0 ? (
-            vanElements
-          ) : (
-            <div className="preloader">
-              <div></div>
-            </div>
+          <span
+            className={`vans--filter simple ${
+              typeFilter === "simple" && "selected"
+            }`}
+            onClick={() => setSearchParams(handleFilter("type", "simple"))}
+          >
+            Simple
+          </span>
+          <span
+            className={`vans--filter luxury ${
+              typeFilter === "luxury" && "selected"
+            }`}
+            onClick={() => setSearchParams(handleFilter("type", "luxury"))}
+          >
+            Luxury
+          </span>
+          <span
+            className={`vans--filter rugged ${
+              typeFilter === "rugged" && "selected"
+            }`}
+            onClick={() => setSearchParams(handleFilter("type", "rugged"))}
+          >
+            Rugged
+          </span>
+          {isFiltered && (
+            <button
+              className="vans--clearFilters"
+              onClick={() => setSearchParams(handleFilter("type", null))}
+            >
+              Clear filters
+            </button>
           )}
         </div>
+
+        <div className="vans--cards-container">{vanElements}</div>
       </div>
     </section>
   );

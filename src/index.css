@@ -4,6 +4,7 @@
   --simple: #e17654;
   --luxury: #161616;
   --rugged: #115e59;
+  --orange: #ff8c38;
 }
 /* Variables */
 
@@ -80,7 +81,7 @@ a {
 .orange-btn {
   font-weight: 700;
   text-align: center;
-  background: #ff8c38;
+  background-color: var(--orange);
   color: #ffffff;
   border-radius: 5px;
   height: 40px;
@@ -90,12 +91,22 @@ a {
   justify-content: center;
   border: transparent;
   margin: 0 auto;
+  cursor: pointer;
 }
 
 .orange-btn:active {
   box-shadow: inset 5px 5px 10px -3px rgba(0, 0, 0, 0.7);
 }
 /* ===== Orange Button  ===== */
+
+/* ===== Disabled Button  ===== */
+.disabled-btn {
+  background-color: gray;
+  color: white;
+  cursor: not-allowed;
+  box-shadow: 0px 0px 10px 0px grey !important;
+}
+/* ===== Disabled Button  ===== */
 
 /* ===== Back arrow ===== */
 .back-arrow {
@@ -142,6 +153,18 @@ a {
 
 .nav--logo {
   width: 120px;
+}
+
+.nav--rightside {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  gap: 20px;
+}
+
+.nav--avatar-icon {
+  width: 30px;
+  height: 100%;
 }
 
 .nav--links {
@@ -200,10 +223,27 @@ a {
   height: 2px;
 }
 
+.nav--logout {
+  background-color: var(--orange);
+  padding: 5px 10px;
+  font-weight: 700;
+  border: 1px solid var(--luxury);
+  color: #161616;
+  border-radius: 4px;
+}
+
+.nav--logout:active {
+  box-shadow: inset 5px 5px 10px -3px rgba(0, 0, 0, 0.7);
+}
+
 /* Navbar--Media */
 @media only screen and (max-width: 576px) {
   nav {
     position: relative;
+  }
+
+  .nav--rightside {
+    flex-direction: row-reverse;
   }
 
   .nav--links {
@@ -464,7 +504,7 @@ footer {
   padding: 0 10px;
 }
 
-.vans--filters > span {
+.vans--filter {
   width: 80px;
   text-align: center;
   padding: 9px;
@@ -475,9 +515,24 @@ footer {
   cursor: pointer;
   user-select: none;
 }
-.vans--filters > span:active {
+.vans--filter:active {
   -webkit-tap-highlight-color: transparent;
   box-shadow: inset 5px 5px 10px -3px rgba(0, 0, 0, 0.7);
+}
+
+.vans--filter.selected {
+  color: #ffead0;
+  font-weight: bold;
+}
+
+.vans--filter.selected.simple {
+  background-color: var(--simple);
+}
+.vans--filter.selected.luxury {
+  background-color: var(--luxury);
+}
+.vans--filter.selected.rugged {
+  background-color: var(--rugged);
 }
 
 .vans--clearFilters {
@@ -493,23 +548,25 @@ footer {
   column-gap: 33.89px;
   row-gap: 26.91px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  justify-items: center;
 }
 
 .van--card {
+  width: 300px;
   cursor: pointer;
   overflow: hidden;
   -webkit-tap-highlight-color: transparent;
 }
 
+.van--card-imgCover {
+  height: 296.58px;
+}
 .van--img {
   width: 100%;
+  height: 100%;
   border-radius: 5px;
   transition: transform 0.5s;
-}
-
-.van--card:hover .van--img {
-  transform: scale(1.15) translate(0, -15px);
 }
 
 .van--info {
@@ -759,7 +816,6 @@ footer {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     justify-items: center;
-    background-color: red;
   }
 
   .host--vans-tile {
@@ -917,3 +973,133 @@ footer {
 /* Host-vanDetail Media */
 
 /* Host-vanDetail */
+
+/* Page 404 */
+.page404 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page404--container {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  @media only screen and (min-width: 576px) {
+    width: 500px;
+  }
+}
+
+.page404 h1 {
+  font-weight: 700;
+  font-size: 32px;
+  color: #161616;
+}
+
+.return-home-btn {
+  width: 100%;
+  background-color: #161616;
+  color: #ffffff;
+  border-radius: 4.98319px;
+  font-size: 18px;
+  font-weight: 700;
+  border: none;
+  padding: 10px 0;
+  cursor: pointer;
+}
+/* Page 404 */
+
+/* Error Page*/
+.error--section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error--container {
+  font-size: calc(1rem + 1.5vw);
+}
+/* Error Page*/
+
+/* Login Page */
+.login--section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 47px;
+  background-color: #fff7ed;
+}
+
+.login--header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.login--header h1 {
+  text-align: center;
+}
+
+.login--form {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+
+  @media only screen and (min-width: 576px) {
+    width: 520px;
+  }
+}
+
+.login--inputs-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.login--inputs-container input {
+  color: #4d4d4d;
+  padding: 9px 13px;
+  font-weight: 400;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.5);
+  outline: none;
+  border: 1px solid #d1d5db;
+  background-color: white;
+}
+
+.login--email {
+  border-radius: 6px 6px 0px 0px;
+  border-bottom: none !important;
+}
+.login--password {
+  border-radius: 0px 0px 6px 6px;
+}
+
+.login--btn {
+  margin-top: 20px;
+  border-radius: 6px;
+  width: 100%;
+}
+
+.login--no-account {
+  font-weight: bold;
+  color: #161616;
+}
+
+.login--create {
+  color: #ff8c38;
+}
+
+.login--requireAuth-msg {
+  color: red;
+  font-weight: bold;
+}
+
+.login--error-msg {
+  color: red;
+  padding: 0 20px;
+}
+/* Login Page */

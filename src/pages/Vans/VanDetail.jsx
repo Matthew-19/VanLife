@@ -1,50 +1,47 @@
 import React from "react";
-import { useParams, Link } from "react-router-dom";
+import { Link, useLocation, useLoaderData } from "react-router-dom";
+import { getVans } from "../../services/api";
+
+export function loader({ params }) {
+  return getVans(params.id);
+}
 
 export default function VanDetail() {
-  const params = useParams();
-  const [vanData, setVanData] = React.useState(null);
+  const location = useLocation();
+  const search = location.state?.search || "";
+  const type = location.state?.type || "all";
 
-  React.useEffect(() => {
-    async function getData() {
-      const res = await fetch(`/api/vans/${params.id}`);
-      const data = await res.json();
-      setVanData(data.vans);
-    }
-    getData();
-  }, []);
+  const vanData = useLoaderData();
 
   return (
     <section className="vanDetail">
-      <Link to=".." relative="path" className="vanDetail--back-btn back-arrow">
-        &larr; Back to all vans
+      <Link
+        to={`..${search}`}
+        relative="path"
+        className="vanDetail--back-btn back-arrow"
+      >
+        &larr; Back to {type} vans
       </Link>
-      {vanData ? (
-        <div className="vanDetail--container">
-          <img
-            src={vanData.imageUrl}
-            alt="van-image"
-            className="vanDetail--img"
-          />
-          <div className="vanDetail--info">
-            <div className={`vanDetail--type ${vanData.type}`}>
-              {vanData.type}
-            </div>
-            <div className="vanDetail--name">{vanData.name}</div>
-            <div className="vanDetail--price">${vanData.price}</div>
-            <p className="vanDetail--description">{vanData.description}</p>
-            <Link>
-              <button className="vanDetail--rent-btn orange-btn">
-                Rent this van
-              </button>
-            </Link>
+      <div className="vanDetail--container">
+        <img
+          src={vanData.imageUrl}
+          alt="van-image"
+          className="vanDetail--img"
+        />
+        <div className="vanDetail--info">
+          <div className={`vanDetail--type ${vanData.type}`}>
+            {vanData.type}
           </div>
+          <div className="vanDetail--name">{vanData.name}</div>
+          <div className="vanDetail--price">${vanData.price}</div>
+          <p className="vanDetail--description">{vanData.description}</p>
+          <Link>
+            <button className="vanDetail--rent-btn orange-btn">
+              Rent this van
+            </button>
+          </Link>
         </div>
-      ) : (
-        <div className="preloader">
-          <div></div>
-        </div>
-      )}
+      </div>
     </section>
   );
 }
