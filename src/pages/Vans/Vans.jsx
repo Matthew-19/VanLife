@@ -1,10 +1,11 @@
 import React from "react";
-import { useSearchParams, useLoaderData } from "react-router-dom";
+import { useSearchParams, useLoaderData, defer, Await } from "react-router-dom";
 import VanCard from "./VanCard";
 import { getVans } from "../../services/api";
+import Loading from "../../components/Loading/Loading";
 
 export function loader() {
-  return getVans();
+  return defer({ vans: getVans() });
 }
 
 export default function Vans() {
@@ -12,25 +13,7 @@ export default function Vans() {
   const typeFilter = searchparams.get("type");
   const isFiltered = searchparams.toString();
 
-  const vansData = useLoaderData();
-
-  const displayedVans = typeFilter
-    ? vansData.filter((van) => van.type === typeFilter)
-    : vansData;
-
-  const vanElements = displayedVans.map((van) => (
-    <VanCard
-      key={van.id}
-      id={van.id}
-      name={van.name}
-      descripton={van.descripton}
-      img={van.imageUrl}
-      price={van.price}
-      type={van.type}
-      search={`?${searchparams.toString()}`}
-      typeFilter={typeFilter}
-    />
-  ));
+  const loaderData = useLoaderData();
 
   function handleFilter(key, value) {
     const newSearchParams = new URLSearchParams(searchparams);
@@ -42,11 +25,27 @@ export default function Vans() {
     return `?${newSearchParams.toString()}`;
   }
 
-  return (
-    <section className="vans">
-      <div className="vans--container">
-        <h1 className="vans--header">Explore our van options</h1>
+  function renderVansHero(vansData) {
+    const displayedVans = typeFilter
+      ? vansData.filter((van) => van.type === typeFilter)
+      : vansData;
 
+    const vanElements = displayedVans.map((van) => (
+      <VanCard
+        key={van.id}
+        id={van.id}
+        name={van.name}
+        descripton={van.descripton}
+        img={van.imageUrl}
+        price={van.price}
+        type={van.type}
+        search={`?${searchparams.toString()}`}
+        typeFilter={typeFilter}
+      />
+    ));
+
+    return (
+      <div className="vans--hero">
         <div className="vans--filters">
           <span
             className={`vans--filter simple ${
@@ -83,6 +82,17 @@ export default function Vans() {
         </div>
 
         <div className="vans--cards-container">{vanElements}</div>
+      </div>
+    );
+  }
+
+  return (
+    <section className="vans">
+      <div className="vans--container">
+        <h1 className="vans--header">Explore our van options</h1>
+        <React.Suspense fallback={<Loading />}>
+          <Await resolve={loaderData.vans}>{renderVansHero}</Await>
+        </React.Suspense>
       </div>
     </section>
   );

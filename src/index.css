@@ -1017,10 +1017,15 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #ffcc8d;
+  height: 100vh;
+  padding-inline: 20px
 }
 
 .error--container {
-  font-size: calc(1rem + 1.5vw);
+  font-size: 26px;
+  border: 5px solid var(--rugged);
+  padding: 20px;
 }
 /* Error Page*/
 
